@@ -11,6 +11,7 @@
     "homePage": "https://github.com/qvink/qvink_memory.git",
     "generate_interceptor": "memory_intercept_messages",
     "i18n": {
-        "zh-tw": "locales/zh-tw.json"
+        "zh-tw": "locales/zh-tw.json",
+        "zh-cn": "locales/zh-cn.json"
     }
 }

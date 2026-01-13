@@ -3696,6 +3696,10 @@ async function summarize_message(index) {
 async function summarize_text(messages) {
     let ctx = getContext()
 
+    // 添加调试信息
+    console.log('summarize_text called with messages:', messages);
+    console.log('messages type:', typeof messages, 'isArray:', Array.isArray(messages));
+
     // get size of text
     let token_size = messages.reduce((acc, p) => acc + count_tokens(p.content), 0);
 
@@ -3704,12 +3708,19 @@ async function summarize_text(messages) {
         error(`Text (${token_size}) exceeds context size (${context_size}).`);
     }
 
-    // prompt, api, instructOverride, systemMode, systemPrompt, responseLength, trimNames, prefill
-    let result = await generateRaw({
+    // 构建请求参数并打印
+    const requestParams = {
         prompt: messages,
+        api: 'openai',
         trimNames: false,
         prefill: get_settings('prefill')
-    });
+    };
+    
+    console.log('generateRaw request params:', requestParams);
+
+    let result = await generateRaw(requestParams);
+
+    console.log('generateRaw result:', result);
 
     // trim incomplete sentences if set in ST settings
     if (ctx.powerUserSettings.trim_sentences) {
