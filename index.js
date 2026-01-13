@@ -3699,9 +3699,16 @@ async function summarize_text(messages) {
     // 添加调试信息
     console.log('summarize_text called with messages:', messages);
     console.log('messages type:', typeof messages, 'isArray:', Array.isArray(messages));
+    
+    // 1. 强制将消息的角色改为 'user'
+    // 这能修复 "Internal Server Error"，因为所有模型都接受 user 消息作为输入
+    let safeMessages = messages.map(msg => ({
+        role: "user", // 强制改为 user
+        content: msg.content
+    }));
 
     // get size of text
-    let token_size = messages.reduce((acc, p) => acc + count_tokens(p.content), 0);
+    let token_size = safeMessages.reduce((acc, p) => acc + count_tokens(p.content), 0);
 
     let context_size = get_context_size();
     if (token_size > context_size) {
@@ -3710,7 +3717,7 @@ async function summarize_text(messages) {
 
     // 构建请求参数并打印
     const requestParams = {
-        prompt: messages,
+        prompt: safeMessages,
         api: 'openai',
         trimNames: false,
         prefill: get_settings('prefill')
