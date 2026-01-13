@@ -120,7 +120,7 @@ const default_settings = {
 
     auto_summarize: true,   // whether to automatically summarize new chat messages
     summarization_delay: 0,  // delay auto-summarization by this many messages (0 summarizes immediately after sending, 1 waits for one message, etc)
-    summarization_time_delay: 0, // time in seconds to delay between summarizations
+    summarization_time_delay: 2, // time in seconds to delay between summarizations
     summarization_time_delay_skip_first: false,  // skip the first delay after a character message
     auto_summarize_batch_size: 1,  // number of messages to summarize at once when auto-summarizing
     auto_summarize_message_limit: 10,  // maximum number of messages to go back for auto-summarization.
